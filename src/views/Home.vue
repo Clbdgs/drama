@@ -1,12 +1,11 @@
 <template>
   <div class="home">
     <el-row :gutter="20">
-      <el-col :span="6" v-for="item in result" :key="item.value">
-        {{item.actors}}
+      <el-col :span="6" v-for="item in result" :key="item.value" class="image">
+        <img  :src="item.imageUrl" alt=""  @click="goDetail(item)">
+        <span>{{item.name}}</span>
       </el-col>
     </el-row>
-    <button type="button" @click="getJson">从后端取json</button>
-    <div>{{json}}</div>
   </div>
 </template>
 
@@ -34,10 +33,19 @@ export default {
 
       getTheate(){
           this.$http.get('http://127.0.0.1:4000/api/nc/theate/all').then(res=>{
-             this.result =res.data.req;
+             this.result = res.data.req;
              window.console.log(res.data.req)
           })
+      },
+      goDetail(item){
+          this.$router.push({name:'about',params: {item:item}})
       }
   }
 }
 </script>
+<style scoped>
+   .image img{
+    width:100%;
+    height:100%;
+  }
+</style>

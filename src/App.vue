@@ -5,8 +5,8 @@
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
           <el-menu-item index="1"><router-link to="/">首页</router-link></el-menu-item>
           <el-menu-item index="2">美剧</el-menu-item>
-          <el-menu-item index="3" disabled>日剧</el-menu-item>
-          <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">TVB</a></el-menu-item>
+          <el-menu-item index="3">日剧</el-menu-item>
+          <el-menu-item index="4">TVB</el-menu-item>
           <el-menu-item index="5"><router-link to="/manage">管理</router-link></el-menu-item>
         </el-menu>
       </el-header>

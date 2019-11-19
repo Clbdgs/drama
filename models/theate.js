@@ -6,11 +6,14 @@ var TheateSchema = new mongoose.Schema({
     theateid:String,
     name:String,
     director:String,
-    actors:[],
+    actors:String,
     type:String,
     country:String,
     season:Number,
     number:Number,
+    imageUrl:String,
+    desc:String,
+    time:String
     // meta:{
     //     createAt:{
     //         type:Date,

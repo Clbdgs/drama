@@ -24,39 +24,15 @@ var addTheate = async (ctx, next) => {
         country:postData.country,
         season:postData.season,
         number:postData.number,
+        imageUrl:postData.imageUrl,
+        desc:postData.desc,
+        time:postData.time
     });
 
     await theate.save();
     ctx.body = {
         success:true
     }
-    // var theateid =await getNextSequenceValue("theateid").then(async(data)=>{
-    //
-    //
-    //
-    // }).then(function(){
-    //     ctx.body = {
-    //         success:true
-    //     }
-    // })
-    // let postData= ctx.request.body;
-    //
-    // var theate = new Theate({
-    //     theateid:1,
-    //     name:postData.name,
-    //     director:postData.director,
-    //     actors:postData.actors,
-    //     type:postData.type,
-    //     country:postData.country,
-    //     season:postData.season,
-    //     number:postData.number,
-    // })
-    //
-    // await theate.save();
-    // ctx.body = {
-    //     success:true
-    // }
-
 }
 var getTheate = async (ctx, next) => {
     const req  = await Theate.find();
@@ -74,13 +50,38 @@ var getTheate = async (ctx, next) => {
         req
     }
 }
-var postTheate = async (ctx, next) => {
-    ctx.response.type = 'application/json';
-    ctx.response.body = {
-        products: products
-    };
-}
+var deleteTheate = async (ctx, next) => {
+    let postData= ctx.request.body;
+    console.log('1',postData);
+    let id = postData.id;
+    console.log('1',id);
+    let flag;
+    await Theate.remove({_id:id}, function (err) {
+        if (err) {
+            flag = false
+        } else {
+            flag = true
+        }
 
+    });
+    ctx.body = {
+        success: flag
+    }
+}
+var editTheate = async (ctx, next) => {
+    let postData= ctx.request.body;
+    let id = postData.id;
+    let updateObj = {};
+    for(let prop in postData){
+        updateObj[prop] = postData[prop]
+    }
+    await Theate.update({_id:id}, {
+        $set:updateObj
+    });
+    ctx.body = {
+        success: true
+    }
+}
 function getNextSequenceValue(sequenceName){
     return new Promise((resolve,reject)=>{
          Counter.findOneAndUpdate(
@@ -96,5 +97,7 @@ function getNextSequenceValue(sequenceName){
 }
 module.exports = {
     'GET /nc/theate/all': getTheate,
-    'POST /nc/theate': addTheate
+    'POST /nc/theate': addTheate,
+    'POST /nc/deleteTheate':deleteTheate,
+    'POST /nc/editTheate':editTheate
 }
